@@ -2,16 +2,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { sdk } from './_app';
 import { SfButton } from '@storefront-ui/react';
-import { LeftDraw } from '@/components/LeftDraw';
+import { LeftDrawer } from '@/components/LeftDraw';
 
-export default function Home() {
-  const [data, setData] = useState('');
-
-  const hitExampleMethodApi = async () => {
-    const { data } = await sdk.boilerplate.exampleMethod('test');
-
-    setData(data);
-  };
+export default function Home({data}: any) {
 
   return (
     <>
@@ -20,30 +13,21 @@ export default function Home() {
         <p className="typography-headline-3">
           Start building Vue Storefront SDK Integration Boilerplate
         </p>
-        <LeftDraw/>
-
-        <p className="typography-headline-3">
-          Make your first API call using SDK
-        </p>
-        <SfButton type="button" onClick={hitExampleMethodApi}>
-          Make SDK API call
-        </SfButton>
-
-        <div className="w-96 h-12 bg-gray-900 rounded-md flex items-center justify-center">
-          {!data ? 'Click the button' : data}
-        </div>
-        
+        <LeftDrawer data={data} />
       </main>
     </>
   );
 }
 
 
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await fetch(`https://localhost:8080/api/getMethodList`)
-//   const data = await res.json()
+export async function getServerSideProps(context: any) {
+  console.log('*******you are here *********')
+  const res = await fetch(`http://localhost:3000/api/getMethodList`)
+  const data = await res.json()
+  
+  console.log('data', data)
 
-//   // Pass data to the page via props
-//   return { props: { data } }
-// }
+  return {
+    props: {data}, // will be passed to the page component as props
+  }
+}

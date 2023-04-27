@@ -1,27 +1,14 @@
-import { SfDrawer } from "@storefront-ui/react";
+import { data } from "autoprefixer";
+import Link from 'next/link';
 
-export const LeftDraw = () => {
+
+export const LeftDrawer = ({data}: any) => {
+  console.log('**** data', data)
   return (
-    <SfDrawer
-    open
-    className="mt-20 !border-none"
-    >
-      <div className="flex items-center justify-between px-10 py-6">
-        <div className="flex items-center">Your Endpoints</div>
-      </div>
-      <div className="p-5 px-10">
-        <strong>
-          <p>
-            To create a new endpoint, run:
-          </p>
-          <p className="typography-text-base md:typography-text-lg bg-slate-300 p-5">
-            npx vsf-cli add endpoint &lt;endpoint-name
-          </p>
-        </strong>
-        
-      </div>
-    </SfDrawer>
+    //create a drawer that is always open
+    <div className="w-96 bg-green-900 rounded-md fixed top-0 left-0 h-screen">
+     {data.methodRoutes.map((route: any) => <Link href={route.path}> {route.name}</Link>)}
+     
+    </div>
   );
 }
-
-  
